@@ -20,7 +20,7 @@ export const ImageGallery = ({ images, onClick }) => {
 ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.exact({
-      id: PropTypes.string,
+      id: PropTypes.number,
       largeImageURL: PropTypes.string,
       webformatURL: PropTypes.string,
       tags: PropTypes.string,

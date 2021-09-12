@@ -4,7 +4,7 @@ import { Item, Img } from './ImageGalleryItem.styled';
 export default function ImageGalleryItem({ image, largeImageURL, tags }) {
   return (
     <Item>
-      <Img src={image} alt={tags} data-largeImg={largeImageURL} />
+      <Img src={image} alt={tags} data-largeimg={largeImageURL} />
     </Item>
   );
 }

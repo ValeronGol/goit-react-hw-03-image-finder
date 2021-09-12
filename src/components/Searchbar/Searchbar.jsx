@@ -9,15 +9,14 @@ import {
 } from './Searchbar.styled';
 
 export const Searchbar = props => {
-  function inputQuery(ev) {
-    ev.preventDefault();
-    console.log(ev.target[1].value);
-    if (ev.target[1].value.trim() === '') {
+  function inputQuery(event) {
+    event.preventDefault();
+    if (event.target[1].value.trim() === '') {
       toast.error('Для поиска необходимо ввести слово');
       return;
     }
-    props.onSubmit(ev.target[1].value.toLowerCase());
-    ev.target[1].value = '';
+    props.onSubmit(event.target[1].value.toLowerCase());
+    event.target[1].value = '';
   }
   return (
     <SearchHeader>

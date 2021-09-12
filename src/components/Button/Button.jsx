@@ -8,3 +8,6 @@ export const Button = ({ onClick }) => {
     </But>
   );
 };
+Button.prototype = {
+  onClick: PropTypes.func.isRequired,
+};
