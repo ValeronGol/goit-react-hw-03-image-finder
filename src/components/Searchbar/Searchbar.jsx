@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import {
   SearchHeader,
   Searchform,
@@ -7,10 +8,20 @@ import {
   SearchInput,
 } from './Searchbar.styled';
 
-export const Searchbar = onSubmit => {
+export const Searchbar = props => {
+  function inputQuery(ev) {
+    ev.preventDefault();
+    console.log(ev.target[1].value);
+    if (ev.target[1].value.trim() === '') {
+      toast.error('Для поиска необходимо ввести слово');
+      return;
+    }
+    props.onSubmit(ev.target[1].value.toLowerCase());
+    ev.target[1].value = '';
+  }
   return (
     <SearchHeader>
-      <Searchform onSubmit={onSubmit}>
+      <Searchform onSubmit={inputQuery}>
         <SearchButton type="submit">
           <SearchLabel>Search</SearchLabel>
         </SearchButton>
