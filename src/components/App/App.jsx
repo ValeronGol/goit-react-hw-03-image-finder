@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ConteinerApp, TitleApp } from './App.styled';
 import { fetchImages } from 'services/Api';
 import { Scroll } from 'services/Scroll';
-import { ConteinerApp } from './App.styled';
 import { Searchbar } from 'components/Searchbar/Searchbar';
-import { ImageGallery } from 'components/ImageGallery/ImageGallery';
+import ImageGallery from 'components/ImageGallery/ImageGallery';
 import { LoaderMore } from 'components/Loader/Loader';
 import { Button } from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
@@ -71,9 +71,11 @@ class App extends Component {
     return (
       <ConteinerApp>
         <Searchbar onSubmit={this.submitForm} />
-        {error && <h3>{error.message}</h3>}
+        {error && <TitleApp>{error.message}</TitleApp>}
         {imgData && imgData.length === 0 && (
-          <h3>По такому запросу картинок не найдено. Введите другой запрос.</h3>
+          <TitleApp>
+            По такому запросу картинок не найдено. Введите другой запрос!!!
+          </TitleApp>
         )}
         {!imgData && loading && <LoaderMore />}
         {imgData && imgData.length > 0 && (
