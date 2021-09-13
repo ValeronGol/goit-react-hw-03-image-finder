@@ -6,12 +6,13 @@ export const ImageGallery = ({ images, onClick }) => {
   return (
     <Gallery onClick={onClick}>
       {images.map(({ id, largeImageURL, webformatURL, tags }) => (
-        <ImageGalleryItem
-          key={id}
-          image={webformatURL}
-          tags={tags}
-          largeImageURL={largeImageURL}
-        />
+        <li key={id}>
+          <ImageGalleryItem
+            image={webformatURL}
+            tags={tags}
+            largeImageURL={largeImageURL}
+          />
+        </li>
       ))}
     </Gallery>
   );
