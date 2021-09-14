@@ -55,10 +55,6 @@ class App extends Component {
     }
   }
 
-  getNewImg = () => {
-    this.fetchData();
-  };
-
   toggleModalShow = event => {
     if (!this.state.isOpenModal) {
       this.setState({ photo: event.target.dataset.photo });
@@ -92,7 +88,7 @@ class App extends Component {
                 props={this.state.photo}
               />
             )}
-            {loading ? <LoaderMore /> : <Button onClick={this.getNewImg} />}
+            {loading ? <LoaderMore /> : <Button onClick={this.fetchData} />}
           </>
         )}
         <ToastContainer autoClose={3000} />

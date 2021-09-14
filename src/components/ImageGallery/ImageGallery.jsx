@@ -5,8 +5,8 @@ import ImageGalleryItem from 'components/ImageGallery/ImageGalleryItem/ImageGall
 const ImageGallery = ({ images, onClick }) => {
   return (
     <Gallery onClick={onClick}>
-      {images.map(({ id, largeImageURL, webformatURL, tags }) => (
-        <li key={id}>
+      {images.map(({ largeImageURL, webformatURL, tags }) => (
+        <li key={webformatURL}>
           <ImageGalleryItem
             image={webformatURL}
             tags={tags}
