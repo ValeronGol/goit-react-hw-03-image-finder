@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const But = styled.button`
+export const Btn = styled.button`
   padding: 8px 16px;
   margin: auto;
   border-radius: 2px;

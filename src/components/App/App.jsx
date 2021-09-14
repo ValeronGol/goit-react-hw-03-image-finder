@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ConteinerApp, TitleApp } from './App.styled';
-import { fetchImages } from 'services/Api';
-import { Scroll } from 'services/Scroll';
+import { fetchImages } from 'services/api';
+import { scroll } from 'services/scroll';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import { LoaderMore } from 'components/Loader/Loader';
 import { Button } from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
+import { ConteinerApp, TitleApp } from './App.styled';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   state = {
@@ -18,7 +18,7 @@ class App extends Component {
     error: null,
     page: 1,
     isOpenModal: false,
-    largeimg: '',
+    photo: '',
   };
 
   submitForm = q => {
@@ -42,11 +42,12 @@ class App extends Component {
         this.setState({
           error,
         });
-      });
+      })
+      .finally(() => this.setState({ loading: false }));
   };
 
   componentDidUpdate(prevProps, prevState) {
-    Scroll();
+    scroll();
 
     if (prevState.query !== this.state.query) {
       this.setState({ imgData: null, page: 1 });
@@ -58,16 +59,17 @@ class App extends Component {
     this.fetchData();
   };
 
-  togleModalShow = event => {
+  toggleModalShow = event => {
     if (!this.state.isOpenModal) {
-      this.setState({ largeimg: event.target.dataset.largeimg });
+      this.setState({ photo: event.target.dataset.photo });
     }
     this.setState(prevState => ({
       isOpenModal: !prevState.isOpenModal,
     }));
   };
 
-  render({ imgData, loading, error } = this.state) {
+  render() {
+    const { imgData, loading, error } = this.state;
     return (
       <ConteinerApp>
         <Searchbar onSubmit={this.submitForm} />
@@ -82,12 +84,12 @@ class App extends Component {
           <>
             <ImageGallery
               images={this.state.imgData}
-              onClick={this.togleModalShow}
+              onClick={this.toggleModalShow}
             />
             {this.state.isOpenModal && (
               <Modal
-                showModal={this.togleModalShow}
-                props={this.state.largeimg}
+                showModal={this.toggleModalShow}
+                props={this.state.photo}
               />
             )}
             {loading ? <LoaderMore /> : <Button onClick={this.getNewImg} />}

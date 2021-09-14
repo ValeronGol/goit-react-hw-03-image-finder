@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Gallery } from './ImageGallery.styled';
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import ImageGalleryItem from 'components/ImageGallery/ImageGalleryItem/ImageGalleryItem';
 
 const ImageGallery = ({ images, onClick }) => {
   return (
@@ -20,13 +20,13 @@ const ImageGallery = ({ images, onClick }) => {
 
 ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.number,
-      largeImageURL: PropTypes.string,
-      webformatURL: PropTypes.string,
-      tags: PropTypes.string,
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
   onClick: PropTypes.func.isRequired,
 };
 export default ImageGallery;

@@ -3,13 +3,13 @@ import { Overlay, ContainerModal } from './Modal.styled';
 
 export default class Modal extends Component {
   componentDidMount() {
-    window.addEventListener('keydown', this.hendelKeyDown);
+    window.addEventListener('keydown', this.KeyDownhandler);
   }
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.hendelKeyDown);
+    window.removeEventListener('keydown', this.KeyDownhandler);
   }
 
-  hendelKeyDown = e => {
+  KeyDownhandler = e => {
     if (e.code === 'Escape') {
       this.props.showModal();
     }
@@ -24,7 +24,7 @@ export default class Modal extends Component {
     return (
       <Overlay onClick={this.hideModal}>
         <ContainerModal>
-          <img src={this.props.props} alt="" />
+          <img src={this.props.props} alt="photoInModal" />
         </ContainerModal>
       </Overlay>
     );

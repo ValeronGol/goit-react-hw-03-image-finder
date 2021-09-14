@@ -4,7 +4,7 @@ import { Item, Img } from './ImageGalleryItem.styled';
 const ImageGalleryItem = ({ image, largeImageURL, tags }) => {
   return (
     <Item>
-      <Img src={image} alt={tags} data-largeimg={largeImageURL} />
+      <Img src={image} alt={tags} data-photo={largeImageURL} />
     </Item>
   );
 };
