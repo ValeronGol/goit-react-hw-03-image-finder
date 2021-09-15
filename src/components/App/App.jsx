@@ -23,7 +23,7 @@ class App extends Component {
   submitForm = q => {
     this.setState({ query: q });
   };
-  fetchImg = () => {
+  getImg = () => {
     this.setState({ loading: true });
     const { query, page } = this.state;
     const images = fetchImages(query, page);
@@ -112,7 +112,7 @@ class App extends Component {
                 props={this.state.photo}
               />
             )}
-            {loading ? <LoaderMore /> : <Button onClick={this.fetchImg} />}
+            {loading ? <LoaderMore /> : <Button onClick={this.getImg} />}
           </>
         )}
         <ToastContainer autoClose={3000} />
