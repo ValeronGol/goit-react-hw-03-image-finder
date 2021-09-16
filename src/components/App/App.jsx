@@ -40,7 +40,7 @@ class App extends Component {
 
     if (shouldImages) {
       try {
-        this.setState({ loading: true, page: 1 });
+        this.setState({ loading: true, imgData: [], page: 1, total: 1 });
         const imgData = await fetchImages(query, page);
         this.setState({
           imgData: imgData.hits,
