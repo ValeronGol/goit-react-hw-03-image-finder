@@ -13,7 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 class App extends Component {
   state = {
     query: null,
-    imgData: null,
+    total: 1,
+    imgData: [],
     loading: false,
     page: 1,
     isOpenModal: false,
@@ -23,61 +24,47 @@ class App extends Component {
   submitForm = q => {
     this.setState({ query: q });
   };
-  getImg = () => {
-    this.setState({ loading: true });
-    const { query, page } = this.state;
-    const images = fetchImages(query, page);
-    images
-      .then(imgData => {
-        this.setState(prevState => ({
-          page: prevState.page + 1,
-          imgData: prevState.imgData
-            ? [...prevState.imgData, ...imgData.hits]
-            : imgData.hits,
-          loading: false,
-        }));
-      })
-      .catch(error => {
-        console.log(error);
-      })
-      .finally(() => this.setState({ loading: false }));
+
+  handleButtonMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
   };
 
   async componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
     const shouldImages = prevState.query !== query;
-    // const shouldPage = prevState.page !== page;
+    const shouldPage = prevState.page !== page;
 
     scroll();
 
     if (shouldImages) {
       try {
-        this.setState({ loading: true, imgData: null, page: 1 });
+        this.setState({ loading: true, page: 1 });
         const imgData = await fetchImages(query, page);
         this.setState({
-          page: prevState.page + 1,
           imgData: imgData.hits,
           loading: false,
+          total: imgData.totalHits,
         });
       } catch (error) {
         this.setState({ loading: false });
         toast.error('Oops, there is no images with that name');
       }
     }
-    // if (shouldPage) {
-    //   try {
-    //     this.setState({ loading: true, imgData: null, page: 1 });
-    //     const imgData = await fetchImages(query, page);
-    //     this.setState({
-    //       page: prevState.page + 1,
-    //       imgData: imgData.hits,
-    //       loading: false,
-    //     });
-    //   } catch (error) {
-    //     this.setState({ loading: false });
-    //     toast.error('Oops, there is no images with that name');
-    //   }
-    // }
+    if (shouldPage) {
+      try {
+        this.setState({ loading: true });
+        const imgData = await fetchImages(query, page);
+        this.setState(prevState => ({
+          imgData: [...prevState.imgData, ...imgData.hits],
+          loading: false,
+        }));
+      } catch (error) {
+        this.setState({ loading: false });
+        toast.error('Oops, there is no images with that name');
+      }
+    }
   }
 
   toggleModalShow = event => {
@@ -90,11 +77,11 @@ class App extends Component {
   };
 
   render() {
-    const { imgData, loading } = this.state;
+    const { imgData, loading, total } = this.state;
     return (
       <ConteinerApp>
         <Searchbar onSubmit={this.submitForm} />
-        {imgData && imgData.length === 0 && (
+        {!total && (
           <TitleApp>
             По такому запросу картинок не найдено. Введите другой запрос!!!
           </TitleApp>
@@ -112,7 +99,11 @@ class App extends Component {
                 props={this.state.photo}
               />
             )}
-            {loading ? <LoaderMore /> : <Button onClick={this.getImg} />}
+            {loading ? (
+              <LoaderMore />
+            ) : (
+              <Button onClick={this.handleButtonMore} />
+            )}
           </>
         )}
         <ToastContainer autoClose={3000} />
